@@ -11,6 +11,7 @@ from app.utils.core.encrypt import FernetEncrypt
 class SupportedDialects(Enum):
     POSTGRES = "postgresql"
     CSV = "csv"
+    MYSQL = "mysql"
 
 
 class DatabaseConnection(BaseModel):
@@ -31,7 +32,7 @@ class DatabaseConnection(BaseModel):
         return match.group(1)
 
     @classmethod
-    def set_dialect(cls, input_string) -> Optional[SupportedDialects]:
+    def set_dialect(cls, input_string) -> Optional[str]:
         for dialect in SupportedDialects:
             if dialect.value in input_string:
                 return dialect.value

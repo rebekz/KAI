@@ -68,6 +68,11 @@ class SQLDatabase:
             config = {"autoload_known_extensions": False}
             _engine_args["connect_args"] = {"config": config}
 
+        # Configure MySQL connections to use pymysql driver
+        if database_uri.startswith("mysql://"):
+            # Replace mysql:// with mysql+pymysql:// to use pymysql driver
+            database_uri = database_uri.replace("mysql://", "mysql+pymysql://", 1)
+        
         if database_uri.lower().startswith("csv"):
             csv_path = database_uri.replace("csv://", "").strip()
             parsed_url = urlparse(csv_path)
